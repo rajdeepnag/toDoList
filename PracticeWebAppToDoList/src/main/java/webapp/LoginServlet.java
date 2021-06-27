@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(urlPatterns = "/login.do")
+@WebServlet(name=urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet{
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
