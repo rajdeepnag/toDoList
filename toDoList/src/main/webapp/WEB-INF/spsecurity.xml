@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/security 
+       http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<security:http auto-config="true" use-expressions="true">
+
+
+
+
+
+		<security:intercept-url pattern="/addToCart**"
+			access="hasRole('user')" />
+			
+			<security:intercept-url pattern="/addpro**"
+			access="hasRole('admin')" />
+				
+		<security:form-login login-page="/login"
+		username-parameter="em"
+       			password-parameter="pwd"
+			login-processing-url="/checkuser" 
+       			authentication-failure-url="/loginerror"
+			authentication-success-forward-url="/loginsuccess"    />
+
+<security:logout logout-success-url = "/signin"   logout-url="/logout"/>
+
+		<security:csrf disabled="true" />
+
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				data-source-ref="cst_DataSource"
+				users-by-username-query="select email,password,'true' as enabled from userdetails where email=?"
+				authorities-by-username-query="select email, role from userdetails  where email =?" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+
+</beans> 
+     
